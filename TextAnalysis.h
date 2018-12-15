@@ -79,9 +79,27 @@ size_t TextAnalysis::countTwoWords(const std::string& word1, const std::string& 
   // set up iterators to find both words
   std::unordered_map<std::string, std::vector<size_t>>::iterator word1It = wordtable.find(word1);
   std::unordered_map<std::string, std::vector<size_t>>::iterator word2It = wordtable.find(word2);
-  // if either word does not exist, return the sum of their sizes. 
-  if(word1It == wordtable.end() || word2It == wordtable.end())
-    return countWord(word1)+countWord(word2);
-  return 0;
-}
+  // if either word does not exist, return 0. 
+  if(word1It == wordtable.end() || word2It == wordtable.end())   
+    return 0; //countWord(word1)+countWord(word2)
+  //Find common Values and add them to a new vector called result vector. We will return the size of this vector.
+  std::vector<size_t> resultVec;
 
+  // this for loop will iterate through all Word1 lines and find if they exist in word2. if they do they will be added to resultVec.
+  for (std::vector<size_t>::iterator i = (word1It->second.begin()); i != (word1It->second.end()); ++i)
+  {
+    if (std::find((word2It->second.begin()), (word2It->second.end()), *i) != (word2It->second.end()))
+    {
+        // if line i from word1 exists anywhere in word2, we will push it into our result vector
+        resultVec.push_back(*i);
+    }
+  }
+  // Now resultVec has all the common lines between word1 and word2. But there are still duplicates.
+  // Delete duplicates inside resultVec
+
+  sort(resultVec.begin(), resultVec.end()); // We need the vector to be sorted for the unique funcion to work
+  resultVec.erase( unique( resultVec.begin(), resultVec.end() ), resultVec.end() ); // erase all values that are duplicated
+  
+  //return the size of the resultVec
+  return resultVec.size();
+}
