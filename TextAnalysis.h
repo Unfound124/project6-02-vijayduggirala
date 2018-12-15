@@ -54,16 +54,34 @@ void TextAnalysis::read_text(std::istream& in, const std::string& ignore) {
 
 // TO DO
 void TextAnalysis::add_word(const std::string& word, size_t line) {
-
+  //try to find the word first. 
+  std::unordered_map<std::string, std::vector<size_t>>::iterator search = wordtable.find(word);
+  //if word does not exist, Initialize new key(word) in hashtable as null vector
+  if(search == wordtable.end()){
+    wordtable[word]= std::vector<size_t>();
+  }
+  //push line into the vector of key(word)
+  wordtable[word].push_back(line);
 }
 
 // TO DO
 size_t TextAnalysis::countWord(const std::string& word) {
-  return 9999;
+  //find word
+  std::unordered_map<std::string, std::vector<size_t>>::iterator search = wordtable.find(word);
+  //return the size of the vector of the key (word) if word exists. Otherwise return 0 because there are 0 occurances
+  if(search != wordtable.end())
+    return search->second.size();
+  return 0;
 }
 
 // TO DO
 size_t TextAnalysis::countTwoWords(const std::string& word1, const std::string& word2) {
-  return 9999;
+  // set up iterators to find both words
+  std::unordered_map<std::string, std::vector<size_t>>::iterator word1It = wordtable.find(word1);
+  std::unordered_map<std::string, std::vector<size_t>>::iterator word2It = wordtable.find(word2);
+  // if either word does not exist, return the sum of their sizes. 
+  if(word1It == wordtable.end() || word2It == wordtable.end())
+    return countWord(word1)+countWord(word2);
+  return 0;
 }
 
