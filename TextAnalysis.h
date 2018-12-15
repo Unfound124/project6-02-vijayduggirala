@@ -52,7 +52,7 @@ void TextAnalysis::read_text(std::istream& in, const std::string& ignore) {
   }
 }
 
-// TO DO
+
 void TextAnalysis::add_word(const std::string& word, size_t line) {
   //try to find the word first. 
   std::unordered_map<std::string, std::vector<size_t>>::iterator search = wordtable.find(word);
@@ -64,7 +64,7 @@ void TextAnalysis::add_word(const std::string& word, size_t line) {
   wordtable[word].push_back(line);
 }
 
-// TO DO
+
 size_t TextAnalysis::countWord(const std::string& word) {
   //find word
   std::unordered_map<std::string, std::vector<size_t>>::iterator search = wordtable.find(word);
@@ -74,7 +74,7 @@ size_t TextAnalysis::countWord(const std::string& word) {
   return 0;
 }
 
-// TO DO
+
 size_t TextAnalysis::countTwoWords(const std::string& word1, const std::string& word2) {
   // set up iterators to find both words
   std::unordered_map<std::string, std::vector<size_t>>::iterator word1It = wordtable.find(word1);
